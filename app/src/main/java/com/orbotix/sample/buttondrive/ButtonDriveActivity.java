@@ -99,7 +99,6 @@ public class ButtonDriveActivity extends Activity {
 
     public void logic() {
 
-
         mSpheroConnectionView.startDiscovery();
 
         receiver = new PebbleDataReceiver(uuid) {
@@ -203,9 +202,6 @@ public class ButtonDriveActivity extends Activity {
         super.onResume();
         // Refresh list of Spheros
 
-
-
-
     }
 
 
@@ -264,7 +260,7 @@ public class ButtonDriveActivity extends Activity {
                 if(firstClick) {
                     mRobot.drive(0f, 0.5f);
                     try {
-                        Thread.sleep(200);                 //1000 milliseconds is one second.
+                        Thread.sleep(100);
                     } catch (InterruptedException ex) {
                         Thread.currentThread().interrupt();
                     }
@@ -272,10 +268,10 @@ public class ButtonDriveActivity extends Activity {
                 }
                 firstClick = false;
 
+                BackLEDOutputCommand.sendCommand(mRobot, 1.0f);
                 mRobot.startCalibration();
                 mRobot.rotate(5f);
                 mRobot.stopCalibration(true);
-                BackLEDOutputCommand.sendCommand(mRobot, 1.0f);
 
                 break;
 
@@ -284,7 +280,6 @@ public class ButtonDriveActivity extends Activity {
 
             case R.id.color_button:
                 mRobot.setColor(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255));
-
                 break;
 
             default:
