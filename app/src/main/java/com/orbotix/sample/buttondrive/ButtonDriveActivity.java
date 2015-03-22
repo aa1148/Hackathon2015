@@ -170,14 +170,41 @@ public class ButtonDriveActivity extends Activity {
                         yView.setText("Y: " + latest_data[1]);
                         zView.setText("Z: " + latest_data[2]);
 
-                        if(latest_data[1] > -200 && latest_data[1] < 200) {
+                        if(latest_data[1] > -250 && latest_data[1] < 250) {
                             mRobot.stop();
-                        } else if(latest_data[1] >= 200) {
+                        } else if(latest_data[1] >= 200 && latest_data[1] < 500) {
+                            mRobot.drive(heading, speed * 0.2f);
+                        } else if(latest_data[1] >= 500 && latest_data[1] < 800) {
+                            mRobot.drive(heading, speed * 0.5f);
+                        } else if(latest_data[1] >= 800) {
                             mRobot.drive(heading, speed);
                         } else if(latest_data[1] <= -200) {
-                            mRobot.drive(heading + 180f, speed);
+                            mRobot.drive((heading + 180f) % 360f, speed * 0.6f);
+                        }
+
+                        if(latest_data[0] < -500 && latest_data[0] > -800) {
+                            heading -= 5f;
+                            if (heading < 0) heading += 360;
+
+                            mRobot.drive(heading, speed * 0.5f);
+                        } else if(latest_data[0] <= -800) {
+                            heading -= 5f;
+                            if (heading < 0) heading += 360;
+
+                            mRobot.drive(heading, speed * 0.8f);
+                        } else if(latest_data[0] > 400 && latest_data[0] < 700) {
+                            heading += 5f;
+                            if(heading > 360) heading -= 360;
+
+                            mRobot.drive(heading, speed * 0.5f);
+                        } else if(latest_data[0] >= 700) {
+                            heading += 5f;
+                            if(heading > 360) heading -= 360;
+
+                            mRobot.drive(heading, speed * 0.8f);
                         }
                     }
+
 
                 });
 
@@ -254,17 +281,11 @@ public class ButtonDriveActivity extends Activity {
         switch (v.getId()) {
 
             case R.id.add_speed_button:
-                if(speed <= 0.9f) {
-                    speed += 0.1f;
-                }
-                changeSpeed = true;
+//                mRobot.rotate(25f);
                 break;
 
             case R.id.decrease_speed_button:
-                if(speed >= 0.2f) {
-                    speed -= 0.1f;
-                }
-                changeSpeed = true;
+//                mRobot.rotate(-25f);
                 break;
 
             case R.id.forty_five_button:
