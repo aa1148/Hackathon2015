@@ -5,11 +5,25 @@
                 android:background="#ff888888">
 
     <Button
-            android:id="@+id/stop_button"
-            style="@style/ControlButton"
-            android:layout_centerInParent="true"
-            android:onClick="onStopClick"
-            android:text="STOP"/>
+        android:id="@+id/stop_button"
+        style="@style/ControlButton"
+        android:layout_centerInParent="true"
+        android:onClick="onStopClick"
+        android:text="STOP"/>
+    <Button
+        android:id="@+id/add_speed_button"
+        style="@style/ControlButton"
+        android:layout_above="@+id/stop_button"
+        android:onClick="onControlClick"
+        android:text="+"/>
+    <Button
+        android:id="@+id/decrease_speed_button"
+        style="@style/ControlButton"
+        android:layout_below="@id/stop_button"
+
+
+        android:onClick="onControlClick"
+        android:text="-"/>
 
 
 
