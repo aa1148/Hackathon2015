@@ -20,6 +20,7 @@ import com.jjoe64.graphview.LineGraphView;
 
 import java.util.UUID;
 
+import orbotix.robot.base.BackLEDOutputCommand;
 import orbotix.robot.base.Robot;
 import orbotix.robot.base.RobotProvider;
 import orbotix.sphero.ConnectionListener;
@@ -281,11 +282,23 @@ public class ButtonDriveActivity extends Activity {
         switch (v.getId()) {
 
             case R.id.add_speed_button:
-//                mRobot.rotate(25f);
+                changeSpeed = true;
+
+                mRobot.startCalibration();
+                mRobot.rotate(5f);
+                mRobot.stopCalibration(true);
+                BackLEDOutputCommand.sendCommand(mRobot, 1.0f);
+
                 break;
 
             case R.id.decrease_speed_button:
-//                mRobot.rotate(-25f);
+                changeSpeed = true;
+
+                mRobot.startCalibration();
+                mRobot.rotate(-5f);
+                mRobot.stopCalibration(true);
+                BackLEDOutputCommand.sendCommand(mRobot, 1.0f);
+
                 break;
 
             case R.id.forty_five_button:
