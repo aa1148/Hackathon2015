@@ -15,6 +15,7 @@ import com.getpebble.android.kit.util.PebbleDictionary;
 
 import java.util.UUID;
 
+import orbotix.robot.base.BackLEDOutputCommand;
 import orbotix.robot.base.Robot;
 import orbotix.robot.base.RobotProvider;
 import orbotix.sphero.ConnectionListener;
@@ -52,10 +53,14 @@ public class ButtonDriveActivity extends Activity {
     float speed = 0.6f;
     float heading = 0f;
 
-    /** The Sphero Connection View */
+    /**
+     * The Sphero Connection View
+     */
     private SpheroConnectionView mSpheroConnectionView;
 
-    /** Called when the activity is first created. */
+    /**
+     * Called when the activity is first created.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,18 +86,18 @@ public class ButtonDriveActivity extends Activity {
             }
         });
 
-        xView = (TextView)findViewById(R.id.x_view);
-        yView = (TextView)findViewById(R.id.y_view);
-        zView = (TextView)findViewById(R.id.z_view);
-        rView = (TextView)findViewById(R.id.r_view);
-        rateView = (TextView)findViewById(R.id.rate_view);
+        xView = (TextView) findViewById(R.id.x_view);
+        yView = (TextView) findViewById(R.id.y_view);
+        zView = (TextView) findViewById(R.id.z_view);
+        rView = (TextView) findViewById(R.id.r_view);
+        rateView = (TextView) findViewById(R.id.rate_view);
 
         logic();
 
     }
 
 
-    public void logic(){
+    public void logic() {
 
 
         mSpheroConnectionView.startDiscovery();
@@ -109,11 +114,11 @@ public class ButtonDriveActivity extends Activity {
                 //Get data
                 latest_data = new int[3 * NUM_SAMPLES];
 //				Log.d(TAG, "NEW DATA PACKET");
-                for(int i = 0; i < NUM_SAMPLES; i++) {
-                    for(int j = 0; j < 3; j++) {
+                for (int i = 0; i < NUM_SAMPLES; i++) {
+                    for (int j = 0; j < 3; j++) {
                         try {
                             latest_data[(3 * i) + j] = data.getInteger((3 * i) + j).intValue();
-                        } catch(Exception e) {
+                        } catch (Exception e) {
                             latest_data[(3 * i) + j] = -1;
                         }
                     }
@@ -130,36 +135,36 @@ public class ButtonDriveActivity extends Activity {
                         zView.setText("Z: " + latest_data[2]);
                         rView.setText("H: " + heading);
 
-                        if(latest_data[1] > -250 && latest_data[1] < 250) {
+                        if (latest_data[1] > -250 && latest_data[1] < 250) {
                             mRobot.stop();
-                        } else if(latest_data[1] >= 200 && latest_data[1] < 500) {
+                        } else if (latest_data[1] >= 200 && latest_data[1] < 500) {
                             mRobot.drive(heading, speed * 0.2f);
-                        } else if(latest_data[1] >= 500 && latest_data[1] < 800) {
+                        } else if (latest_data[1] >= 500 && latest_data[1] < 800) {
                             mRobot.drive(heading, speed * 0.5f);
-                        } else if(latest_data[1] >= 800) {
+                        } else if (latest_data[1] >= 800) {
                             mRobot.drive(heading, speed);
-                        } else if(latest_data[1] <= -200) {
+                        } else if (latest_data[1] <= -200) {
                             mRobot.drive((heading + 180f) % 360f, speed * 0.6f);
                         }
 
-                        if(latest_data[0] < -500 && latest_data[0] > -800) {
+                        if (latest_data[0] < -500 && latest_data[0] > -800) {
                             heading -= 5f;
                             if (heading < 0) heading += 360;
 
                             mRobot.drive(heading, speed * 0.5f);
-                        } else if(latest_data[0] <= -800) {
+                        } else if (latest_data[0] <= -800) {
                             heading -= 5f;
                             if (heading < 0) heading += 360;
 
                             mRobot.drive(heading, speed * 0.8f);
-                        } else if(latest_data[0] > 400 && latest_data[0] < 700) {
+                        } else if (latest_data[0] > 400 && latest_data[0] < 700) {
                             heading += 5f;
-                            if(heading > 360) heading -= 360;
+                            if (heading > 360) heading -= 360;
 
                             mRobot.drive(heading, speed * 0.5f);
-                        } else if(latest_data[0] >= 700) {
+                        } else if (latest_data[0] >= 700) {
                             heading += 5f;
-                            if(heading > 360) heading -= 360;
+                            if (heading > 360) heading -= 360;
 
                             mRobot.drive(heading, speed * 0.8f);
                         }
@@ -169,8 +174,7 @@ public class ButtonDriveActivity extends Activity {
                 });
 
 
-
-                if(System.currentTimeMillis() - lastAverageTime > 1000) {
+                if (System.currentTimeMillis() - lastAverageTime > 1000) {
                     lastAverageTime = System.currentTimeMillis();
 
                     rateView.setText("" + sampleCount + " samples per second."
@@ -191,7 +195,9 @@ public class ButtonDriveActivity extends Activity {
 
     }
 
-    /** Called when the user comes back to this app */
+    /**
+     * Called when the user comes back to this app
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -204,7 +210,9 @@ public class ButtonDriveActivity extends Activity {
     }
 
 
-    /** Called when the user presses the back or home button */
+    /**
+     * Called when the user presses the back or home button
+     */
     @Override
     protected void onPause() {
         super.onPause();
@@ -212,9 +220,9 @@ public class ButtonDriveActivity extends Activity {
     }
 
     private String getTotalDataString() {
-        if(totalData < 1000) {
+        if (totalData < 1000) {
             return "" + totalData + " Bytes.";
-        } else if(totalData > 1000 && totalData < 1000000) {
+        } else if (totalData > 1000 && totalData < 1000000) {
             return "" + totalData / 1000 + " KBytes.";
         } else {
             return "" + totalData / 1000000 + " MBytes.";
@@ -241,10 +249,78 @@ public class ButtonDriveActivity extends Activity {
     }
 
 
-
     /**
      * When the user clicks a control button, roll the Robot in that direction
      */
 
+    public void onControlClick(View v) {
+        // Find the heading, based on which button was clicked
+        boolean changeSpeed = false;
+        System.out.println("speed: " + speed);
 
+
+        switch (v.getId()) {
+
+            case R.id.add_speed_button:
+                changeSpeed = true;
+
+                mRobot.startCalibration();
+                mRobot.rotate(5f);
+                mRobot.stopCalibration(true);
+                BackLEDOutputCommand.sendCommand(mRobot, 1.0f);
+
+                break;
+
+            case R.id.decrease_speed_button:
+                changeSpeed = true;
+
+                mRobot.startCalibration();
+                mRobot.rotate(-5f);
+                mRobot.stopCalibration(true);
+                BackLEDOutputCommand.sendCommand(mRobot, 1.0f);
+
+                break;
+
+            case R.id.forty_five_button:
+                heading = 45f;
+                changeSpeed = false;
+                break;
+
+            case R.id.ninety_button:
+                heading = 90f;
+                changeSpeed = false;
+                break;
+
+            case R.id.one_thirty_five_button:
+                heading = 135f;
+                changeSpeed = false;
+                break;
+
+            case R.id.one_eighty_button:
+                heading = 180f;
+                changeSpeed = false;
+                break;
+
+            case R.id.two_twenty_five_button:
+                heading = 225f;
+                changeSpeed = false;
+                break;
+
+            case R.id.two_seventy_button:
+                heading = 270f;
+                changeSpeed = false;
+                break;
+
+            case R.id.three_fifteen_button:
+                heading = 315f;
+                changeSpeed = false;
+                break;
+
+            default:
+                heading = 0f;
+                changeSpeed = false;
+                break;
+        }
+
+    }
 }
