@@ -146,17 +146,32 @@ public class ButtonDriveActivity extends Activity {
                         }
 
 
-                        if ( latest_data[0] < 400 && latest_data[0] > 100 ){
+
+
+
+
+                        if ( latest_data[0] < 250 && latest_data[0] > 50 ){
+                            heading += 1f;
+                        }
+
+
+                        else if ( latest_data[0] > -250 && latest_data[0] < -50 ){
+                            heading -= 1f;
+                        }
+
+
+                        else if ( latest_data[0] < 400 && latest_data[0] > 250 ){
                             heading += 2f;
                         }
 
-                        else if ( latest_data[0] > -500 && latest_data[0] < -100 ){
+
+                        else if ( latest_data[0] > -500 && latest_data[0] < -250 ){
                             heading -= 2f;
                         }
 
                         else if (latest_data[0] < -500 && latest_data[0] > -800) {
 
-                            heading -= 5f;
+                            heading -= 4f;
 
                             if (heading < 0) heading += 360;
                             mRobot.drive(heading, speed * 0.5f);
@@ -170,7 +185,7 @@ public class ButtonDriveActivity extends Activity {
 
                         } else if (latest_data[0] > 400 && latest_data[0] < 700) {
 
-                            heading += 5f;
+                            heading += 4f;
 
                             if (heading > 360) heading -= 360;
                                 mRobot.drive(heading, speed * 0.5f);
@@ -240,17 +255,10 @@ public class ButtonDriveActivity extends Activity {
         }
     }
 
-    /**
-     * When the user clicks "STOP", stop the Robot.
-     *
-     * @param v The View that had been clicked
-     */
 
 
 
-    /**
-     * When the user clicks a control button, roll the Robot in that direction
-     */
+
     boolean firstClick = true;
 
 
