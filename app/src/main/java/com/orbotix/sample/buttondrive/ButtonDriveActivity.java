@@ -18,6 +18,7 @@ import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.GraphViewSeries.GraphViewSeriesStyle;
 import com.jjoe64.graphview.LineGraphView;
 
+import java.util.Random;
 import java.util.UUID;
 
 import orbotix.robot.base.BackLEDOutputCommand;
@@ -29,6 +30,8 @@ import orbotix.view.connection.SpheroConnectionView;
 
 /** Activity for controlling the Sphero with five control buttons. */
 public class ButtonDriveActivity extends Activity {
+
+    Random rand = new Random();
 
     //Constants
     public static final String TAG = ButtonDriveActivity.class.getName();
@@ -272,38 +275,48 @@ public class ButtonDriveActivity extends Activity {
     /**
      * When the user clicks a control button, roll the Robot in that direction
      */
-
+    boolean firstClick = true;
     public void onControlClick(View v) {
         // Find the heading, based on which button was clicked
         boolean changeSpeed = false;
         System.out.println("speed: " + speed);
-
 
         switch (v.getId()) {
 
             case R.id.add_speed_button:
                 changeSpeed = true;
 
+                if(firstClick) {
+                    mRobot.drive(0f, 0.5f);
+                    try {
+                        Thread.sleep(200);                 //1000 milliseconds is one second.
+                    } catch (InterruptedException ex) {
+                        Thread.currentThread().interrupt();
+                    }
+                    mRobot.stop();
+                }
+                firstClick = false;
+
                 mRobot.startCalibration();
                 mRobot.rotate(5f);
                 mRobot.stopCalibration(true);
                 BackLEDOutputCommand.sendCommand(mRobot, 1.0f);
 
+                changeSpeed = true;
                 break;
 
             case R.id.decrease_speed_button:
-                changeSpeed = true;
-
                 mRobot.startCalibration();
-                mRobot.rotate(-5f);
+                mRobot.rotate(5f);
                 mRobot.stopCalibration(true);
                 BackLEDOutputCommand.sendCommand(mRobot, 1.0f);
 
+                changeSpeed = true;
                 break;
 
             case R.id.forty_five_button:
-                heading = 45f;
-                changeSpeed = false;
+                mRobot.setColor(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255));
+                changeSpeed = true;
                 break;
 
             case R.id.ninety_button:
