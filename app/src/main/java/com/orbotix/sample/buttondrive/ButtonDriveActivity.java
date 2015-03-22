@@ -254,7 +254,7 @@ public class ButtonDriveActivity extends Activity {
     boolean firstClick = true;
     public void onControlClick(View v) {
         // Find the heading, based on which button was clicked
-        boolean changeSpeed = false;
+
         System.out.println("speed: " + speed);
 
         switch (v.getId()) {
@@ -277,55 +277,15 @@ public class ButtonDriveActivity extends Activity {
                 mRobot.stopCalibration(true);
                 BackLEDOutputCommand.sendCommand(mRobot, 1.0f);
 
-                changeSpeed = true;
                 break;
 
             case R.id.decrease_speed_button:
                 break;
 
-            case R.id.forty_five_button:
-                mRobot.setColor(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255));
-                changeSpeed = true;
-                break;
-
-            case R.id.ninety_button:
-                heading = 90f;
-                changeSpeed = false;
-                break;
-
-            case R.id.one_thirty_five_button:
-                heading = 135f;
-                changeSpeed = false;
-                break;
-
-            case R.id.one_eighty_button:
-                heading = 180f;
-                changeSpeed = false;
-                break;
-
-            case R.id.two_twenty_five_button:
-                heading = 225f;
-                changeSpeed = false;
-                break;
-
-            case R.id.two_seventy_button:
-                heading = 270f;
-                changeSpeed = false;
-                break;
-
-            case R.id.three_fifteen_button:
-                heading = 315f;
-                changeSpeed = false;
-                break;
-
-
             case R.id.color_button:
-
-
-
+                mRobot.setColor(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255));
 
                 break;
-
 
             default:
                 break;
