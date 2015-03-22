@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="#ff888888">
+
+    <Button
+            android:id="@+id/stop_button"
+            style="@style/ControlButton"
+            android:layout_centerInParent="true"
+            android:onClick="onStopClick"
+            android:text="STOP"/>
+
+    <Button
+            android:id="@+id/zero_button"
+            style="@style/ControlButton"
+            android:layout_above="@id/stop_button"
+            android:layout_alignLeft="@id/stop_button"
+            android:onClick="onControlClick"
+            android:text="0˚"/>
+
+    <Button
+            android:id="@+id/forty_five_button"
+            style="@style/ControlButton"
+            android:layout_toRightOf="@id/zero_button"
+            android:layout_alignBaseline="@id/zero_button"
+            android:onClick="onControlClick"
+            android:text="45˚"/>
+
+    <Button
+            android:id="@+id/ninety_button"
+            style="@style/ControlButton"
+            android:layout_alignTop="@id/stop_button"
+            android:layout_toRightOf="@id/stop_button"
+            android:onClick="onControlClick"
+            android:text="90˚"/>
+
+    <Button
+            android:id="@+id/one_eighty_button"
+            style="@style/ControlButton"
+            android:layout_alignLeft="@id/stop_button"
+            android:layout_below="@id/stop_button"
+            android:onClick="onControlClick"
+            android:text="180˚"/>
+
+    <Button
+        android:id="@+id/one_thirty_five_button"
+        style="@style/ControlButton"
+        android:layout_toRightOf="@id/one_eighty_button"
+        android:layout_alignBaseline="@id/one_eighty_button"
+        android:onClick="onControlClick"
+        android:text="135˚"/>
+
+    <Button
+            android:id="@+id/two_twenty_five_button"
+            style="@style/ControlButton"
+            android:layout_toLeftOf="@id/one_eighty_button"
+            android:layout_alignBaseline="@id/one_eighty_button"
+            android:onClick="onControlClick"
+            android:text="225˚"/>
+
+    <Button
+            android:id="@+id/two_seventy_button"
+            style="@style/ControlButton"
+            android:layout_alignTop="@id/stop_button"
+            android:layout_toLeftOf="@id/stop_button"
+            android:onClick="onControlClick"
+            android:text="270˚"/>
+
+    <Button
+            android:id="@+id/three_fifteen_button"
+            style="@style/ControlButton"
+            android:layout_toLeftOf="@id/zero_button"
+            android:layout_alignBaseline="@id/zero_button"
+            android:onClick="onControlClick"
+            android:text="315˚"/>
+
+    <Button
+        android:id="@+id/add_speed_button"
+        style="@style/ControlButton"
+        android:layout_height="80dp"
+        android:layout_width="70dp"
+        android:layout_toRightOf="@id/one_thirty_five_button"
+        android:layout_marginTop="420dp"
+        android:text="+"
+        android:textSize="50sp"
+        android:onClick="onControlClick"/>
+
+    <Button
+        android:id="@+id/decrease_speed_button"
+        style="@style/ControlButton"
+        android:layout_height="80dp"
+        android:layout_width="70dp"
+        android:layout_toLeftOf="@id/two_twenty_five_button"
+        android:layout_marginTop="420dp"
+        android:text="-"
+        android:textSize="50sp"
+        android:onClick="onControlClick"/>
+
+    <orbotix.view.connection.SpheroConnectionView
+            android:id="@+id/sphero_connection_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#D0000000"/>
+
+    <TextView
+        android:id="@+id/x_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="NO DATA" />
+
+    <TextView
+        android:id="@+id/y_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/x_view"
+        android:text="NO DATA" />
+
+    <TextView
+        android:id="@+id/z_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/y_view"
+        android:text="NO DATA" />
+
+    <TextView
+        android:id="@+id/rate_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/z_view"
+        android:text="NO DATA" />
+
+    <Button
+        android:id="@+id/start_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/rate_view"
+        android:text="START" />
+
+</RelativeLayout>
