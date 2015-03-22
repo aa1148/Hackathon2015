@@ -198,6 +198,20 @@ public class ButtonDriveActivity extends Activity {
                             mRobot.drive(heading, speed * 0.8f);
 
                         }
+
+                        if(latest_data[3] == 1) {
+                            mRobot.startCalibration();
+                            mRobot.rotate(10f);
+                            mRobot.stopCalibration(true);
+                        }
+
+                        if(latest_data[4] == 1) {
+                            mRobot.setColor(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255));
+                        }
+
+                        if(latest_data[5] == 1) {
+                            // detener
+                        }
                     }
 
 
