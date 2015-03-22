@@ -147,26 +147,46 @@ public class ButtonDriveActivity extends Activity {
                             mRobot.drive((heading + 180f) % 360f, speed * 0.6f);
                         }
 
-                        if (latest_data[0] < -500 && latest_data[0] > -800) {
-                            heading -= 5f;
-                            if (heading < 0) heading += 360;
 
+                        if ( latest_data[0] < 400 && latest_data[0] > 100 ){
+                            heading += 2f;
+                        }
+
+
+                        else if ( latest_data[0] > -500 && latest_data[0] < -100 ){
+                            heading -= 2f;
+                        }
+
+
+
+                        else if (latest_data[0] < -500 && latest_data[0] > -800) {
+
+                            heading -= 5f;
+
+                            if (heading < 0) heading += 360;
                             mRobot.drive(heading, speed * 0.5f);
+
                         } else if (latest_data[0] <= -800) {
+
                             heading -= 5f;
+
                             if (heading < 0) heading += 360;
+                                mRobot.drive(heading, speed * 0.8f);
 
-                            mRobot.drive(heading, speed * 0.8f);
                         } else if (latest_data[0] > 400 && latest_data[0] < 700) {
-                            heading += 5f;
-                            if (heading > 360) heading -= 360;
 
-                            mRobot.drive(heading, speed * 0.5f);
+                            heading += 5f;
+
+                            if (heading > 360) heading -= 360;
+                                mRobot.drive(heading, speed * 0.5f);
+
                         } else if (latest_data[0] >= 700) {
-                            heading += 5f;
-                            if (heading > 360) heading -= 360;
 
+                            heading += 5f;
+
+                            if (heading > 360) heading -= 360;
                             mRobot.drive(heading, speed * 0.8f);
+
                         }
                     }
 
@@ -233,6 +253,16 @@ public class ButtonDriveActivity extends Activity {
      *
      * @param v The View that had been clicked
      */
+
+
+
+    /**
+     * When the user clicks a control button, roll the Robot in that direction
+     */
+    boolean firstClick = true;
+
+
+
     public void onStopClick(View v) {
         if (mRobot != null) {
             // Stop robot
@@ -248,10 +278,7 @@ public class ButtonDriveActivity extends Activity {
     }
 
 
-    /**
-     * When the user clicks a control button, roll the Robot in that direction
-     */
-    boolean firstClick = true;
+
     public void onControlClick(View v) {
         // Find the heading, based on which button was clicked
 
