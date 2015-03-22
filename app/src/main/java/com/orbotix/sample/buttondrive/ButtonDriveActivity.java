@@ -14,7 +14,6 @@ import com.getpebble.android.kit.util.PebbleDictionary;
 import java.util.Random;
 import java.util.UUID;
 
-import orbotix.robot.base.BackLEDOutputCommand;
 import orbotix.robot.base.Robot;
 import orbotix.sphero.ConnectionListener;
 import orbotix.sphero.Sphero;
@@ -151,12 +150,9 @@ public class ButtonDriveActivity extends Activity {
                             heading += 2f;
                         }
 
-
                         else if ( latest_data[0] > -500 && latest_data[0] < -100 ){
                             heading -= 2f;
                         }
-
-
 
                         else if (latest_data[0] < -500 && latest_data[0] > -800) {
 
@@ -283,23 +279,6 @@ public class ButtonDriveActivity extends Activity {
         switch (v.getId()) {
 
             case R.id.add_speed_button:
-
-                if(firstClick) {
-                    mRobot.drive(0f, 0.5f);
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException ex) {
-                        Thread.currentThread().interrupt();
-                    }
-                    mRobot.stop();
-                }
-                firstClick = false;
-
-                BackLEDOutputCommand.sendCommand(mRobot, 1.0f);
-                mRobot.startCalibration();
-                mRobot.rotate(5f);
-                mRobot.stopCalibration(true);
-
                 break;
 
             case R.id.decrease_speed_button:
