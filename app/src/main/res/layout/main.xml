@@ -24,6 +24,14 @@
 
         android:onClick="onControlClick"
         android:text="-"/>
+    <Button
+        android:id="@+id/color_button"
+        style="@style/ControlButton"
+        android:layout_below="@id/add_speed_button"
+
+
+        android:onClick="onControlClick"
+        android:text="C"/>
 
 
 

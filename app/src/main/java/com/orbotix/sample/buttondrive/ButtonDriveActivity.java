@@ -279,6 +279,14 @@ public class ButtonDriveActivity extends Activity {
                 break;
 
 
+            case R.id.color_button:
+
+
+
+
+                break;
+
+
             default:
                 break;
         }
