@@ -51,6 +51,7 @@ public class ButtonDriveActivity extends Activity {
     // Set speed. 60% of full speed
     float speed = 0.6f;
     float heading = 0f;
+    boolean pause = false;
 
     /**
      * The Sphero Connection View
@@ -128,89 +129,86 @@ public class ButtonDriveActivity extends Activity {
 
                     @Override
                     public void run() {
+
+                        mRobot.setBackLEDBrightness(1.0f);
+
                         xView.setText("X: " + latest_data[0]);
                         yView.setText("Y: " + latest_data[1]);
                         zView.setText("Z: " + latest_data[2]);
                         rView.setText("H: " + heading);
 
-                        if (latest_data[1] > -250 && latest_data[1] < 250) {
-                            mRobot.stop();
-                        } else if (latest_data[1] >= 200 && latest_data[1] < 500) {
-                            mRobot.drive(heading, speed * 0.2f);
-                        } else if (latest_data[1] >= 500 && latest_data[1] < 800) {
-                            mRobot.drive(heading, speed * 0.5f);
-                        } else if (latest_data[1] >= 800) {
-                            mRobot.drive(heading, speed);
-                        } else if (latest_data[1] <= -200) {
-                            mRobot.drive((heading + 180f) % 360f, speed * 0.6f);
-                        }
+                        if(!pause) {
+
+                            if (latest_data[1] > -250 && latest_data[1] < 250) {
+                                mRobot.stop();
+                            } else if (latest_data[1] >= 200 && latest_data[1] < 500) {
+                                mRobot.drive(heading, speed * 0.2f);
+                            } else if (latest_data[1] >= 500 && latest_data[1] < 800) {
+                                mRobot.drive(heading, speed * 0.5f);
+                            } else if (latest_data[1] >= 800) {
+                                mRobot.drive(heading, speed);
+                            } else if (latest_data[1] <= -200) {
+                                mRobot.drive((heading + 180f) % 360f, speed * 0.6f);
+                            }
 
 
+                            if (latest_data[0] < 250 && latest_data[0] > 50) {
+                                heading += 1f;
+                            } else if (latest_data[0] > -250 && latest_data[0] < -50) {
+                                heading -= 1f;
+                            } else if (latest_data[0] < 400 && latest_data[0] > 250) {
+                                heading += 2f;
+                            } else if (latest_data[0] > -500 && latest_data[0] < -250) {
+                                heading -= 2f;
+                            } else if (latest_data[0] < -500 && latest_data[0] > -800) {
 
+                                heading -= 4f;
 
-
-
-                        if ( latest_data[0] < 250 && latest_data[0] > 50 ){
-                            heading += 1f;
-                        }
-
-
-                        else if ( latest_data[0] > -250 && latest_data[0] < -50 ){
-                            heading -= 1f;
-                        }
-
-
-                        else if ( latest_data[0] < 400 && latest_data[0] > 250 ){
-                            heading += 2f;
-                        }
-
-
-                        else if ( latest_data[0] > -500 && latest_data[0] < -250 ){
-                            heading -= 2f;
-                        }
-
-                        else if (latest_data[0] < -500 && latest_data[0] > -800) {
-
-                            heading -= 4f;
-
-                            if (heading < 0) heading += 360;
-                            mRobot.drive(heading, speed * 0.5f);
-
-                        } else if (latest_data[0] <= -800) {
-
-                            heading -= 5f;
-
-                            if (heading < 0) heading += 360;
-                                mRobot.drive(heading, speed * 0.8f);
-
-                        } else if (latest_data[0] > 400 && latest_data[0] < 700) {
-
-                            heading += 4f;
-
-                            if (heading > 360) heading -= 360;
+                                if (heading < 0) heading += 360;
                                 mRobot.drive(heading, speed * 0.5f);
 
-                        } else if (latest_data[0] >= 700) {
+                            } else if (latest_data[0] <= -800) {
 
-                            heading += 5f;
+                                heading -= 5f;
 
-                            if (heading > 360) heading -= 360;
-                            mRobot.drive(heading, speed * 0.8f);
+                                if (heading < 0) heading += 360;
+                                mRobot.drive(heading, speed * 0.8f);
 
+                            } else if (latest_data[0] > 400 && latest_data[0] < 700) {
+
+                                heading += 4f;
+
+                                if (heading > 360) heading -= 360;
+                                mRobot.drive(heading, speed * 0.5f);
+
+                            } else if (latest_data[0] >= 700) {
+
+                                heading += 5f;
+
+                                if (heading > 360) heading -= 360;
+                                mRobot.drive(heading, speed * 0.8f);
+
+                            }
+
+                            if (latest_data[3] == 1) {
+                                mRobot.rotate(10f);
+                            }
                         }
 
-                        if(latest_data[3] == 1) {
-                            mRobot.startCalibration();
-                            mRobot.rotate(10f);
-                            mRobot.stopCalibration(true);
+                        if (latest_data[4] == 1) {
+                            mRobot.setColor(rand.nextInt(255), rand.nextInt(255), rand.nextInt(255));
                         }
 
-                        if(latest_data[4] == 1) {
-                            mRobot.setColor(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255));
-                        }
 
                         if(latest_data[5] == 1) {
-                            // detener
+                            if(pause) {
+                                mRobot.setColor(0,0,255);
+                                pause = false;
+                            } else {
+                                mRobot.setColor(255,0,0);
+                                mRobot.stop();
+                                pause = true;
+                            }
                         }
                     }
 
